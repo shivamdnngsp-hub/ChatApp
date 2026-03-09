@@ -7,11 +7,14 @@ const ClearChat = () => {
 
   const selectedChat = useSelector((state) => state.chat.selectedChat);
   const [dropBoxOpen, setOpen] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const handleClearChat = async () => {
     try {
 
       if (!selectedChat?._id) return;
+
+      setLoading(true);
 
       await api.delete("/messages/deleteallforme", {
         data: { chatId: selectedChat._id }
@@ -21,6 +24,8 @@ const ClearChat = () => {
 
     } catch (error) {
       console.log(error.response?.data || error.message);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -53,13 +58,14 @@ const ClearChat = () => {
         <div className="absolute right-0 top-8 w-40 bg-slate-800 border border-slate-700 rounded shadow-lg">
 
           <button
-            className="px-4 py-2 text-sm text-white hover:bg-slate-700 w-full text-left"
+            disabled={loading}
+            className="px-4 py-2 text-sm text-white hover:bg-slate-700 w-full text-left disabled:opacity-50"
             onClick={(e) => {
               e.stopPropagation();
               handleClearChat();
             }}
           >
-            Clear Chat
+            {loading ? "Clearing..." : "Clear Chat"}
           </button>
 
         </div>
