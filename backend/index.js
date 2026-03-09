@@ -60,8 +60,14 @@ app.set("io", io)
 
 io.on("connection", (socket) => {
   console.log("User connected:", socket.id);
-
+ 
   socket.on("join", async (userId) => {
+
+      if (!userId || userId === "") {
+    console.log("Invalid join attempt:", userId);
+    return;
+  }
+
     socket.userId = userId
     await redis.set(`user:${userId}`, socket.id);
 
