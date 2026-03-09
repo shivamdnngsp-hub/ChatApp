@@ -17,7 +17,7 @@ export const getUserChat = async (req, res) => {
 
       if (!aiChat) {
         aiChat = await Chat.create({
-          participants: [userId, aiUser._id]
+          participants: [userId, aiUser._id].filter(Boolean)
         });
     
 
@@ -74,7 +74,7 @@ console.log("here")
 
 
     const newChat = await Chat.create({
-      participants: [userId, otherUserId]
+      participants: [userId, otherUserId].filter(Boolean)
     });
 
     const createdChat = await Chat.findById(newChat._id)

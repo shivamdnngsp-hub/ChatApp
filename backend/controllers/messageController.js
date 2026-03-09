@@ -34,7 +34,7 @@ export const sendMessage = async (req, res, next) => {
 
       if (!chat) {
         chat = await Chat.create({
-          participants: [senderId, receiver]
+          participants: [senderId, receiver].filter(Boolean)
         });
       }
 
@@ -101,7 +101,7 @@ if (senderSocketId) {
 
     if (!chat) {
       chat = await Chat.create({
-        participants: [senderId, receiver]
+        participants: [senderId, receiver].filter(Boolean)
       })
     }
 
@@ -190,7 +190,7 @@ export const sendMedia = async (req, res, next) => {
 
     if (!chat) {
       chat = await Chat.create({
-        participants: [senderId, receiver]
+        participants: [senderId, receiver].filter(Boolean)
       })
     }
 
