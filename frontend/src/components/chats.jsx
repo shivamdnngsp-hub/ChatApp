@@ -87,6 +87,8 @@ const Chats = () => {
               u => (u._id || u)?.toString() !== user?._id?.toString()
             );
 
+            console.log("participants:", chat.participants);
+
             if (!otherUser) return null;
            const otherUserId = otherUser._id || otherUser;
 const isOnline = onlineUsers.includes(otherUserId);
