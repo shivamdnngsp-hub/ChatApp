@@ -63,11 +63,7 @@ io.on("connection", (socket) => {
  
   socket.on("join", async (userId) => {
 
-      if (!userId || userId === "") {
-    console.log("Invalid join attempt:", userId);
-    return;
-  }
-
+    
     socket.userId = userId
     await redis.set(`user:${userId}`, socket.id);
 
