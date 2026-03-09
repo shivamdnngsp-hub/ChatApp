@@ -32,9 +32,15 @@ export const sendMessage = async (req, res, next) => {
         participants: { $all: [senderId, receiver] }
       });
 
+if (!receiver) {
+  return res.status(400).json({ message: "receiver missing" });
+}
+
+
+
       if (!chat) {
         chat = await Chat.create({
-          participants: [senderId, receiver].filter(Boolean)
+          participants: [senderId, receiver]
         });
       }
 
@@ -101,7 +107,7 @@ if (senderSocketId) {
 
     if (!chat) {
       chat = await Chat.create({
-        participants: [senderId, receiver].filter(Boolean)
+        participants: [senderId, receiver]
       })
     }
 
@@ -190,7 +196,7 @@ export const sendMedia = async (req, res, next) => {
 
     if (!chat) {
       chat = await Chat.create({
-        participants: [senderId, receiver].filter(Boolean)
+        participants: [senderId, receiver]
       })
     }
 

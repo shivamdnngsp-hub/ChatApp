@@ -17,7 +17,7 @@ export const getUserChat = async (req, res) => {
 
       if (!aiChat) {
         aiChat = await Chat.create({
-          participants: [userId, aiUser._id].filter(Boolean)
+          participants: [userId, aiUser._id]
         });
     
 
@@ -59,6 +59,13 @@ console.log("here")
       return res.status(400).json({ message: "user id required" })
     }
 
+if (!otherUserId) {
+  return res.status(400).json({ message: "otherUserId missing" });
+}
+
+
+
+
     let chat = await Chat.findOne({
       participants: {
         $all: [userId, otherUserId]
@@ -74,7 +81,7 @@ console.log("here")
 
 
     const newChat = await Chat.create({
-      participants: [userId, otherUserId].filter(Boolean)
+      participants: [userId, otherUserId]
     });
 
     const createdChat = await Chat.findById(newChat._id)
