@@ -3,7 +3,7 @@ import api from "../../api/axios";
 import { useDispatch, useSelector } from "react-redux";
 import { setSelectedChat } from "../store/chatSlice";
 import { socket } from "../../socket/socket";
-import { setChats, updateChat, clearUnread } from "../store/chatList";
+import { setChats, updateChat,clearUnread } from "../store/chatList";
 
 const Chats = () => {
 
@@ -13,7 +13,7 @@ const Chats = () => {
 
   const dispatch = useDispatch();
   const user = useSelector((state) => state.auth.user);
-  console.log("chats ran user is " + { user })
+ console.log("chats ran user is "+ {user})
 
   const onlineUsers = useSelector((state) => state.onlineUsers.users)
   const selectedChat = useSelector((state) => state.chat.selectedChat);
@@ -49,7 +49,7 @@ const Chats = () => {
 
     const updateNewChats = (message) => {
 
-      dispatch(updateChat({ message, selectedChatId: selectedChat?._id, userId: user?._id }));
+      dispatch(updateChat({message,selectedChatId: selectedChat?._id,userId: user?._id}));
 
     };
 
@@ -84,14 +84,11 @@ const Chats = () => {
           {chats.map((chat) => {
 
             const otherUser = chat.participants?.find(
-              u => (u._id || u)?.toString() !== user?._id?.toString()
+              u => u._id?.toString() !== user?._id?.toString()
             );
 
-          
-
             if (!otherUser) return null;
-           const otherUserId = otherUser._id || otherUser;
-const isOnline = onlineUsers.includes(otherUserId);
+            const isOnline = onlineUsers.includes(otherUser._id)
 
             return (
 
